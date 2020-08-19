@@ -57,6 +57,12 @@ export default class OTPInputView extends Component {
         };
         this.handleChangeText = (index, text) => {
             const { onCodeFilled, pinCount } = this.props;
+            if (text?.length === pinCount) {
+                this.setState({ digits: text.split('') })
+                this.blurAllFields()
+                onCodeFilled && onCodeFilled(text);
+                return
+            }
             const digits = this.getDigits();
             let newdigits = digits.slice();
             const oldTextLength = newdigits[index] ? newdigits[index].length : 0;
